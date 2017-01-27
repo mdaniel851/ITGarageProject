@@ -1,0 +1,81 @@
+IT Garage
+
+Project Robotype
+
+Overview ---------------------------------------------------------------------------
+
+The purpose of these applications is to implement a server for a turn based combat
+strategy game, where the combatants are robots.  The key functionality is 
+communication between clients mediated through the server.  The server will also 
+record match and player info for each client to a persistent database.  Some error
+checking and anti-cheating measures were also integrated.  The thread diagram below
+will give a concept of how the server application works.  Also, there is a class
+diagram in this directory for further illustration.       
+
+The development was done in java.  This was chosen for portability extensibility, 
+and ease of implementation of OOP principles. This is a multi threaded application.  
+Since this is a server application which is turn based, there is a lot of blocking 
+for I/O that occurs.  This means a threaded implementation makes sense.
+
+The database used was MongoDB.  This was chosen because tables had to change
+according to new development requirements.  Since MongoDB has a document structure
+new data typesare easily added to each record.
+
+The IT Garage, at Start Up Zone Charlottetown, is government funded program that 
+gives new grads or young entrepreneurs the resources to create a project of their 
+own design.  The Java applications and the C# classes demonstrated here are my 
+work which was done in coordination with another developer who worked on the game 
+mechanics in the Unity engine, and 3 artists.  I had developed the client side class
+(GameControl) which is responsible for communication, as well as helping integrate
+calls to this class in other parts of the client application.  The Project Robotype 
+gamewas intended to be a PC game distributed on Steam, but with some changes could 
+be tooled for android.  
+
+   
+Thread Diagram -------------------------------------------------------------------
+
+
+MultiThreadedServerTester(Main)						      kill
+________+________________________________________________________________________x   
+	|
+	|
+	|
+	|    Requests from port
+Listener|________________________________________________________________________x
+	|       v
+	|       v Client Sign Ins    
+	|	v 
+	|       v             Battle Requests   New Battle
+	|_______+_______+___+___________________+________________________________x
+GameManager	|	|   | ^	   ^	        |
+		|	|   | ^	   ^	        |
+	Client1	|-------------^--------------------v---------v---------x sign out
+			|   |	   ^		|  v         v    
+			|   |      ^		|  v  	^    v    ^  
+			|   |      ^	 Battle |_______^_________^_x game over
+  			|   |      ^              ^     v     ^   V 
+			|   |      ^	  	  ^  	v     ^	  v  
+		Client2	|----------^--------------^-----------^--------x sign out
+			    |
+                    Client3 |---------------x time out	
+
+
+Notes:
+
+- Communication between threads represented with v or ^ depending on direction
+- + represents new threads started
+- kill is input from keyboard to stop the server
+
+
+Success and Difficulties----------------------------------------------------------
+
+This project was given a 3 month time frame.  This required us to conceptualize 
+and design the entire project fairly quickly.  There were some setbacks, such as
+changing the platform from augmented reality android, to PC. We had to start over
+several times as a result.  Also, none of the team members had used Unity or C# 
+for development.  MongoDB was new to us as well.
+
+Given the problems we had, we produced a vertical slice of the software which
+represented key functionality of the game play.  The new technologies were 
+sucessfully integrated.  Also, some of the key elements for monetization such as
+the shop had been roughed in.  The rewards system was mostly constructed.
